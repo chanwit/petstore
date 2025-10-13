@@ -5,7 +5,8 @@ services:
     environment:
       POSTGRES_DB: petstore
       POSTGRES_USER: petstore
-      POSTGRES_PASSWORD: petstore
+      POSTGRES_PASSWORD: petstore  # Dev-only credentials
+      PGUSER: petstore
     ports:
       - "5432:5432"
     volumes:
@@ -15,6 +16,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
 
 volumes:
   postgres_data:
